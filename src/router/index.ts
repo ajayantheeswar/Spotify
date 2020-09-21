@@ -1,29 +1,36 @@
-import Vue from 'vue'
-import VueRouter, { RouteConfig } from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from "vue";
+import VueRouter, { RouteConfig } from "vue-router";
 
-Vue.use(VueRouter)
+import Profile from "@/views/Profile/Profile.vue";
+import homePage from "@/components/HomePage/homeAd.vue";
+
+import signin from "@/views/SignIn/SignIn.vue";
+import signup from "@/views/SignUp/SignUp.vue";
+import * as ProfileCompents from "@/components/Profile/index";
+
+Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
-]
+	{
+		path: "/account",
+		component: Profile,
+		children: [
+			{ path: "account-overview", component: ProfileCompents.AccountOverview },
+			{ path: "edit-profile", component: ProfileCompents.EditProfile },
+			{ path: "change-password", component: ProfileCompents.ChangePassword },
+			{ path: "recover-playlists", component: signin },
+			{ path: "" , redirect: 'account-overview'}
+		],
+	},
+	{ path: "/signin", component: signin },
+	{ path: "/signup", component: signup },
+	{ path: "/", component: homePage },
+];
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
-})
+	mode: "history",
+	base: process.env.BASE_URL,
+	routes,
+});
 
-export default router
+export default router;
