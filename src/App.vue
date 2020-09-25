@@ -1,19 +1,29 @@
 <template>
-	<div id="app">
+	<div v-if="mounted" id="app">
 		<router-view></router-view>
-		<Footer></Footer>
 	</div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 
-import Footer from "@/components/shared/Footer/Footer.vue";
-
 export default Vue.extend({
-	components: {
-		Footer
+	data(){
+		return {
+			mounted : false
+		}
 	},
+	components: {
+
+	},
+	mounted() {
+		this.$store.dispatch('checkAuthOnLoading',
+			(val: any)=> {
+				this.mounted = true;
+				
+			})
+		console.log('a')
+	}
 });
 </script>
 

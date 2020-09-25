@@ -1,5 +1,5 @@
 <template>
-	<div class="flex flex-col pt-8 items-center mb-20 space-y-4">
+	<div v-if="mounted" class="flex flex-col pt-8 items-center mb-20 space-y-4">
 		<div class="">
 			<svg
 				class="inline-block mr-2 h-12 fill-black"
@@ -28,6 +28,13 @@
 			<p class="border-t-2 w-20"></p>
 		</div>
 		<h1 class="text-xl font-bold">Sign Up with Email</h1>
+		<div
+			v-show="error"
+			class="border-2 p-2 rounded flex justify-center bg-red-300 border-red-500 capitalize"
+			style="width:400px;"
+		>
+			<p style="color:red;">{{ error  }}</p>
+		</div>
 		<form
 			@submit.prevent="signUpsubmit"
 			class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 lg:w-1/3 xl:w-1/4 flex flex-col"
@@ -200,7 +207,7 @@
 					<div class="flex justify-evenly">
 						<div class="relative space-x-2">
 							<input
-								v-model="gender"
+								v-model="gender.value"
 								id="male"
 								value="Female"
 								type="radio"
@@ -210,7 +217,7 @@
 						</div>
 						<div class="relative space-x-2">
 							<input
-								v-model="gender"
+								v-model="gender.value"
 								id="female"
 								value="Male"
 								type="radio"
@@ -220,7 +227,7 @@
 						</div>
 						<div class="relative space-x-2">
 							<input
-								v-model="gender"
+								v-model="gender.value"
 								id="notg"
 								value="Not - Intrested"
 								type="radio"
@@ -268,12 +275,25 @@ export default Vue.extend({
 			},
 			gender: {
 				touched: false,
-				value: "",
+				value: "Female",
 			},
 			username: {
 				touched: false,
 				value: "",
 			},
+			day: {
+				touched: false,
+				value: "",
+			},
+			month : {
+				touched: false,
+				value: "",
+			},
+			year : {
+				touched: false,
+				value: "",
+			},
+			mounted : false
 		};
 	},
 
@@ -286,16 +306,57 @@ export default Vue.extend({
 			}
 			return ans;
 		},
+
+		error () {
+			return this.$store.getters.getError;
+		},
+		isAuth: function () {
+			return this.$store.getters.isAuthenticated
+		}
+	},
+	watch : {
+		isAuth (changed){
+			if(changed) this.$router.push('/account')
+		}
 	},
 
 	methods: {
 		signUpsubmit() {
-			console.log("Submitted");
+			if(this.email.value !== '' || 
+			this.password.value !== '' || 
+			this.username.value !== '' || 
+			this.day.value !== '' ||
+			this.month.value !== '' ||  
+			this.year.value !== '' ||
+			this.gender.value !== ''){
+				const credientials = this.getCredientialData();
+				console.log('deter')
+				this.$store.dispatch('signUpWithEmail',
+					credientials
+				)
+			}
+
 		},
 		isEmailValid(value: string) {
 			return isEmail(value);
 		},
+		getCredientialData () {
+			const date = new Date()
+			date.setFullYear(+this.year.value,+this.month.value-1,+this.day.value)
+			return {
+				name : this.username.value,
+				password: this.password.value,
+				email : this.email.value,
+				dob : date.toISOString(),
+				gender : this.gender.value
+			}
+		}
 	},
+	mounted() {
+		const auth = this.$store.getters.isAuthenticated;
+		if(auth) this.$router.push('/account')
+		else this.mounted = true
+	}
 });
 </script>
 

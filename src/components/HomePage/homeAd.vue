@@ -14,17 +14,20 @@
 				</button>
 			</div>
 		</div>
+		<Footer></Footer>
 	</div>
 	
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import NavBar from '@/views/Navbar/Navbar.vue'
+import NavBar from '@/views/Navbar/Navbar.vue';
+import Footer from '@/components/shared/Footer/Footer.vue'
 
 export default Vue.extend({
 	components : {
-		NavBar
+		NavBar,
+		Footer
 	}
 });
 </script>

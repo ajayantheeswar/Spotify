@@ -51,27 +51,33 @@
 					<p
 						class="hidden lg:block align-middle self-stretch bg-white w-px"
 					></p>
-					<!-- <router-link
+					<router-link
+						v-if="!isAuth"
 						class="mx-5 my-px lg:text-lg hover:text-spgreen"
 						to="signup"
 						>Sign Up</router-link
 					>
 					<router-link
+					v-if="!isAuth"
 						class="mx-5 my-px lg:text-lg hover:text-spgreen"
 						to="signin"
 						>Sign In</router-link
-					> -->
-					<div class="m-2 pr-2 pl-4 flex lg:items-center relative profile flex-col items-start">
+					>
+					<div v-if="isAuth" 
+						class="m-2 pr-2 pl-4 flex lg:items-center relative profile items-start space-x-4">
 						<div v-if="imageUrl === ''" class="rounded-full bg-gray-700 p-3">
 							<img  src="@/assets/profiledef.svg" class="fill-white block w-5" alt='profile' />
 						</div>
 						<div v-else class="rounded-full bg-gray-700 p-3">
 							<img  :src="imageUrl" class="fill-white block w-5" alt='profile' />
 						</div>
+						<div class="hidden lg:block text-white test-xl">
+							<p>{{ email }}</p>
+						</div>
 						<div class="lg:absolute flex flex-col lg:text-black lg:bg-white p-2 pr-5 lg:pl-5 rounded profile-drop-down bg-black focus:text-spotify">
 							<div class="hidden arrow-up lg:block"></div>
 							<router-link class="hover:text-spgreen" to='/account'>Account</router-link>
-							<router-link class="hover:text-spgreen" to='/logout'>logout</router-link>
+							<p class="hover:text-spgreen" to='/logout' @click="logout">logout</p>
 						</div>
 					</div>
 				</ul>
@@ -83,7 +89,6 @@
 <script lang="ts">
 import Vue from "vue";
 
-
 export default Vue.extend({
 	name: "NavBar",
 	data() {
@@ -91,7 +96,24 @@ export default Vue.extend({
 			imageUrl : ''
 		}
 	},
-	props : ['position']
+	computed : {
+		isAuth : function() {
+			const result = this.$store.getters.isAuthenticated
+			return result
+		},
+		email : function() {
+			if(!this.isAuth) return null
+			const result = this.$store.getters.getEmail
+			return result
+		}
+	}
+	,props : ['position'],
+	methods : {
+		logout() {
+			this.$store.dispatch('logout');
+		}
+	}
+	
 	
 });
 </script>

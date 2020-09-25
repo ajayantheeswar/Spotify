@@ -98,12 +98,15 @@
 				</div>
 			</div>
 		</div>
+		<Footer />
 	</div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import Navbar from "@/views/Navbar/Navbar.vue";
+import Footer from '@/components/shared/Footer/Footer.vue'
+
 export default Vue.extend({
 	data() {
 		return {
@@ -137,6 +140,7 @@ export default Vue.extend({
 
 	components: {
 		Navbar,
+		Footer
 	},
 
 	watch: {

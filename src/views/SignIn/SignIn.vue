@@ -1,5 +1,5 @@
 <template>
-	<div class="flex flex-col pt-8 items-center mb-20 space-y-4">
+	<div v-if="mounted" class="flex flex-col pt-8 items-center mb-20 space-y-4">
 		<div class="">
 			<svg
 				class="inline-block mr-2 h-12 fill-black"
@@ -28,8 +28,15 @@
 			<p class="border-t-2 w-20"></p>
 		</div>
 		<h1 class="text-xl font-bold">Sign In with Email</h1>
+		<div
+			v-show="error"
+			class="border-2 p-2 rounded flex justify-center bg-red-300 border-red-500 capitalize"
+			style="width:400px;"
+		>
+			<p style="color:red;">{{ error  }}</p>
+		</div>
 		<form
-			@submit.prevent="signUpsubmit"
+			@submit.prevent="signInsubmit"
 			class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 lg:w-1/3 xl:w-1/4 flex flex-col"
 		>
 			<div class="mb-4">
@@ -59,6 +66,8 @@
 					Password
 				</label>
 				<input
+					v-model="password.value"
+					@blur="password.touched = true"
 					class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 					id="username"
 					type="password"
@@ -77,6 +86,7 @@
 <script lang="ts">
 import Vue from "vue";
 import isEmail from "validator/lib/isEmail";
+
 export default Vue.extend({
 	data() {
 		return {
@@ -88,6 +98,7 @@ export default Vue.extend({
 				touched: false,
 				value: "",
 			},
+			mounted : false
 		};
 	},
 
@@ -99,16 +110,38 @@ export default Vue.extend({
 			}
 			return ans;
 		},
+		error () {
+			return this.$store.getters.getError;
+		},
+		isAuth() {
+			const result = this.$store.getters.isAuthenticated
+			return result
+		}
+	},
+
+	watch : {
+		isAuth (changed){
+			if(changed) this.$router.push('/account')
+		}
 	},
 
 	methods: {
-		signUpsubmit() {
-			console.log("Submitted");
+		signInsubmit() {
+			this.$store.dispatch('signInWithEmail',{
+				email : this.email.value,
+				password : this.password.value
+			})
 		},
 		isEmailValid(value: string) {
 			return isEmail(value);
 		},
 	},
+
+	mounted() {
+		const auth = this.$store.getters.isAuthenticated;
+		if(auth) this.$router.push('/account')
+		else this.mounted = true
+	}
 });
 </script>
 

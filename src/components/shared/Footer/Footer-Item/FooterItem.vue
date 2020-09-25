@@ -19,8 +19,5 @@
 import Vue from 'vue'
 export default Vue.extend({
     props : ['title','elements'],
-    mounted () {
-        console.log(this.elements)
-    }
 })
 </script>

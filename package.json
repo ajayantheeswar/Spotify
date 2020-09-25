@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@types/validator": "^13.1.0",
+    "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "tailwindcss": "^1.8.10",
     "validator": "^13.1.1",

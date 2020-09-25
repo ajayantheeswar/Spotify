@@ -16,7 +16,9 @@ module.exports = {
         facebookBlue : '#3a5897',
         greyblack100 : '#222326',
         greyblack200 : '#919496',
-        lightgrey1 : '#9E9E9E'
+        lightgrey1 : '#9E9E9E',
+        lightgrey2 : '#282828',
+        lightgrey3 : '#7f7f7f'
       }
     },
     fill: theme => ({
