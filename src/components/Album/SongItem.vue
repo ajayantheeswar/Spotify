@@ -3,12 +3,14 @@
         <div class="flex">
             <span class="song-symbol"></span>
             <div class="song-artist ml-10 text-xs space-y-1">
-                <p class="text-sm">Tum hi Ho</p>
-                <p class="text-lightgrey1">Arjit Singh</p>
+                <p class="text-sm">{{ track.track_name }}</p>
+                <div class="text-lightgrey1">
+                    <p v-for="artist in track.track_artist" :key="artist.id">{{ artist.artist.artist_name }}</p>
+                </div>
             </div>
         </div>
-        <div v-if="isAlbum">
-            <p class="text-lightgrey3 text-xs">Master</p>
+        <div v-if="!isAlbum">
+            <p class="text-lightgrey3 text-xs">{{ AlbumName }}</p>
         </div>
         <div class="flex items-center">
             <div class="text-white text-2xl flex items-start relative option w-10 pb-3">
@@ -28,11 +30,14 @@
 <script lang="ts">
 import Vue from 'vue'
 export default Vue.extend({
-    props : ['isAlbum'],
+    props : ['isAlbum',"track","AlbumName"],
     methods : {
         log(message: string) {
             console.log(message)
         }
+    },
+    mounted() {
+        console.log(this.track.track_artist)
     }
 })
 </script>

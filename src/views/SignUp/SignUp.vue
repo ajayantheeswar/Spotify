@@ -121,6 +121,7 @@
 						<select
 							class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
 							id="grid-state"
+							v-model="day.value"
 						>
 							<option v-for="i in 31" :key="i" :value="i">{{ i }}</option>
 						</select>
@@ -150,6 +151,7 @@
 						<select
 							class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
 							id="grid-state"
+							v-model="month.value"
 						>
 							<option v-for="i in 12" :key="i" :value="i">{{ i }}</option>
 						</select>
@@ -179,6 +181,7 @@
 						<select
 							class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
 							id="grid-state"
+							v-model="year.value"
 						>
 							<option v-for="i in years" :key="i" :value="i">{{ i }}</option>
 						</select>
@@ -283,15 +286,15 @@ export default Vue.extend({
 			},
 			day: {
 				touched: false,
-				value: "",
+				value: "1",
 			},
 			month : {
 				touched: false,
-				value: "",
+				value: "1",
 			},
 			year : {
 				touched: false,
-				value: "",
+				value: "1971",
 			},
 			mounted : false
 		};

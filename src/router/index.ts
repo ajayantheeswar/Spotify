@@ -12,9 +12,12 @@ import Player from "@/views/Player/Player.vue";
 import * as PlayerComponents from "@/components/Player/index";
 import Album from "@/views/Album/Album.vue";
 
-import playlist from '@/views/Playlist/Playlist.vue';
+import playlist from "@/views/Playlist/Playlist.vue";
 
-import store from '../store/index';
+import store from "../store/index";
+
+import admin from "@/views/Admin/Admin.vue";
+import * as AdminComponents from "@/components/Admin/index";
 
 Vue.use(VueRouter);
 
@@ -29,10 +32,10 @@ const routes: Array<RouteConfig> = [
 			{ path: "recover-playlists", component: signin },
 			{ path: "", redirect: "account-overview" },
 		],
-		meta : {
-			requiresAuth : true,
-			role : 'user'
-		}
+		meta: {
+			requiresAuth: true,
+			role: "user",
+		},
 	},
 	{
 		path: "/player",
@@ -45,8 +48,34 @@ const routes: Array<RouteConfig> = [
 			{ path: "playlist/:playlistID", component: playlist },
 		],
 	},
-	{ path: "/signin", component: signin ,name : "Login"},
-	{ path: "/signup", component: signup ,name : "SignUp"},
+	{ path: "/signin", component: signin, name: "Login" },
+	{ path: "/signup", component: signup, name: "SignUp" },
+	{
+		path: "/admin",
+		component: admin,
+		children: [
+			{
+				path: "album",
+				component: AdminComponents.Album,
+				props: true,
+				children: [
+					{
+						path: "create-album",
+						component: AdminComponents.CreateAlbum,
+						props: true,
+					},
+					{
+						path : "",
+						redirect: "create-album"
+					}
+				],
+			},
+			{
+				path : "",
+				redirect: "album"
+			}
+		],
+	},
 	{ path: "/", component: homePage },
 ];
 
@@ -56,19 +85,16 @@ const router = new VueRouter({
 	routes,
 });
 
-
 router.beforeEach((to, from, next) => {
-
-	if (to.matched.some(record => record.meta.requiresAuth)) {
-        if (store.getters.isAuthenticated) {
-            next()
-            return
-        }
-        next('/signin')
-    }else {
-        next()
-    }
-})
-
+	if (to.matched.some((record) => record.meta.requiresAuth)) {
+		if (store.getters.isAuthenticated) {
+			next();
+			return;
+		}
+		next("/signin");
+	} else {
+		next();
+	}
+});
 
 export default router;

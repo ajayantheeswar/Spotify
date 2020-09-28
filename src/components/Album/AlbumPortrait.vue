@@ -1,15 +1,13 @@
 <template>
     <div class="pt-8 p-8 flex">
         <div class="inline-block">
-            <img src="@/assets/master.jpeg" style="height:200px" class="m-0 inline-block" alt=""/>
+            <img :src="image" style="height:200px" class="m-0 inline-block" alt=""/>
         </div>
         <div class="flex flex-col justify-end pl-6">
             <h6 class="text-sm font-bold">Album</h6>
-            <h1 class="text-4xl font-bold">Master</h1>
+            <h1 class="text-4xl font-bold">{{ albumName }}</h1>
             <div class="space-x-4 flex">
-                <h1 class="text-sm">Anirudh Ravichander</h1>
-                <h1 class="text-sm">Anirudh Ravichander</h1>
-                <h1 class="text-sm">Anirudh Ravichander</h1>
+                <h1 class="text-sm">{{ musicDirector }}</h1>
             </div>
         </div>
     </div>
@@ -18,7 +16,7 @@
 <script lang="ts">
 import Vue from 'vue'
 export default Vue.extend({
-    
+    props : ['albumName','musicDirector','image']
 })
 </script>
 
