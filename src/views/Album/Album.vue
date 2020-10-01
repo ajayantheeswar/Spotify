@@ -1,15 +1,19 @@
 <template>
     <div v-if="mounted && !error">
         <div v-if="trackItem" class="bg-black sticky top-0 left-0 w-full p-3 pr-5 pl-5 text-xl font-bold z-10">Navbar</div>
-        <Albumportrait 
+        <Albumportrait
             :musicDirector="trackItem.artist.artist_name"
             :image="trackItem.image_url"
             :albumName="trackItem.album_name"/>
-        <AlbumControl />
+        <AlbumControl 
+            @addToQueue="addToQueue"
+            @playAlbum="playAlbum" />
         <ul class="mt-7 space-y-4">
            <AlbumSongItem 
                 v-for="track in trackItem.track"
                 :AlbumName="trackItem.album_name"
+                @addOneToQueue="addOneToQueue"
+                @playClick="playSong"
                 :isAlbum="true" 
                 :key="track.id" 
                 :track="track" />
@@ -25,6 +29,8 @@ import AlbumSongItem from '@/components/Album/SongItem.vue';
 
 import * as PlayerService from '@/services/player.service';
 
+import {playerEventBus} from '@/main'
+
 export default Vue.extend({
     components : {
         Albumportrait,
@@ -33,7 +39,7 @@ export default Vue.extend({
     },
     data() {
         return {
-            trackItem : null as unknown as any[],
+            trackItem : null as unknown as any,
             mounted : false,
             error : null as unknown as string,
             loading : false
@@ -46,7 +52,6 @@ export default Vue.extend({
                 .then(({data}) => {
                     this.loading = false
                     this.trackItem = data ? data : null
-                    console.log(data)
                     cb()
                 })
                 .catch(err => {
@@ -59,10 +64,33 @@ export default Vue.extend({
                     }
                     cb()
                 })
+        },
+        playAlbum(){
+            playerEventBus.$emit('setTrackSource',{
+                trackList : this.trackItem.track,
+                playnow: true
+            })
+        },
+        addToQueue() {
+            playerEventBus.$emit('addToQueue',{
+                trackList : this.trackItem.track,
+                playnow : false
+            })
+        },
+        addOneToQueue(track: any) {
+            playerEventBus.$emit('addOneToQueue',{
+                track : track
+            })
+        },
+        playSong(track: any) {
+            playerEventBus.$emit('setTrackSource',{
+                trackList : this.trackItem.track,
+                playnow : true,
+                clickedTrack : track
+            })
         }
     },
     mounted() {
-        console.log(this.$route.params.albumID);
         this.getAlbum(this.$route.params.albumID,() => {
             this.mounted = true
         })

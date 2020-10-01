@@ -20,9 +20,7 @@ export default Vue.extend({
 		this.$store.dispatch('checkAuthOnLoading',
 			(val: any)=> {
 				this.mounted = true;
-				
 			})
-		console.log('a')
 	}
 });
 </script>

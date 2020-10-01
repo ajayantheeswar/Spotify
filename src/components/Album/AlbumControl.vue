@@ -1,6 +1,6 @@
 <template>
     <div class="p-3 pl-10 flex items-center space-x-6">
-        <button class="bg-spgreen rounded-full h-12 w-12 flex justify-center items-center text-2xl play-button">►</button>
+        <button @click.prevent="playAlbum" class="bg-spgreen rounded-full h-12 w-12 flex justify-center items-center text-2xl play-button">►</button>
         <input id="favorite" hidden type="checkbox" :value="true"/>
         <label for="favorite" class="block w-6"><img src="@/assets/like.svg" alt='ile'></label>
         <div class="text-white text-2xl flex items-start relative option w-10">
@@ -8,17 +8,32 @@
             <p>.</p>
             <p>.</p>
             <div class="hidden absolute drop cursor-pointer">
-                <p class="hover:bg-gray-800 p-1 rounded">Add to Queue</p>
-                <p class="hover:bg-gray-800 p-1 rounded">Add to playlist</p>
+                <p class="hover:bg-gray-800 p-1 rounded" @click="addToQueue">Add to Queue</p>
+                <p v-if="isplaylist && owner"
+                    @click="deletePlaylist" 
+                    class="hover:bg-gray-800 p-1 rounded">Delete Playlist</p>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from 'vue';
+import * as PlayerService from '@/services/player.service'
+
 export default Vue.extend({
-    
+    props:['isplaylist','owner']
+    ,methods:{
+        playAlbum (){
+            this.$emit('playAlbum');
+        },
+        addToQueue () {
+            this.$emit('addToQueue')
+        },
+        deletePlaylist() {
+            this.$emit('deletePlaylist')
+        }
+    }
 })
 </script>
 

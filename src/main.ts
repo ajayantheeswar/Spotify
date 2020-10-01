@@ -7,6 +7,8 @@ import '@/assets/css/tailwind.css'
 
 Vue.config.productionTip = false
 
+export const playerEventBus = new Vue()
+
 new Vue({
   router,
   store,

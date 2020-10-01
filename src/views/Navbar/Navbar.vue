@@ -39,9 +39,9 @@
 						>Premium</router-link
 					>
 					<router-link
-						class="mx-5 my-px lg:text-lg hover:text-spgreen"
-						to="support"
-						>Help</router-link
+						class="mx-5 my-px lg:text-lg hover:text-spgreen cursor-pointer"
+						to="/player"
+						>Player</router-link
 					>
 					<router-link
 						class="mx-5 my-px lg:text-lg hover:text-spgreen"

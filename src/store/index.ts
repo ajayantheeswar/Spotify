@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import AuthModule from './auth.store';
 
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -13,6 +14,7 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    auth : AuthModule
+    auth : AuthModule,
+  
   }
 })
