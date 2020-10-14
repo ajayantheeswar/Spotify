@@ -1,6 +1,5 @@
 <template>
     <div v-if="mounted && !error">
-        <div v-if="trackItem" class="bg-black sticky top-0 left-0 w-full p-3 pr-5 pl-5 text-xl font-bold z-10">Navbar</div>
         <Albumportrait
             :musicDirector="trackItem.artist.artist_name"
             :image="trackItem.image_url"

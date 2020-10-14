@@ -19,6 +19,8 @@ import store from "../store/index";
 import admin from "@/views/Admin/Admin.vue";
 import * as AdminComponents from "@/components/Admin/index";
 
+import * as searchComponents from "@/components/Search/index";
+
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
@@ -43,7 +45,12 @@ const routes: Array<RouteConfig> = [
 		children: [
 			{ path: "", component: PlayerComponents.Home, props: true },
 			{ path: "library", component: PlayerComponents.Library, props: true },
-			{ path: "search", component: PlayerComponents.Search, props: true },
+			{path: "search/albums/:query", component: searchComponents.SearchAlbum, props: true},
+			{ path: "search", component: PlayerComponents.Search, props: true ,
+				children:[
+					{path: ":query", component: PlayerComponents.Search, props: true}
+				]
+			},
 			{ path: "album/:albumID", component: Album },
 			{ path: "playlist/:playlistID", component: playlist },
 		],

@@ -32,6 +32,7 @@
                 v-show="createPlaylistShow" />
             
             <div class="main-panel text-white flex flex-col relative">
+                <NavBarElement />
                 <router-view :windowWidth="windowWidth" />
                 <div class="absolute bottom-0 w-full">
                     <MusicPlayer/>
@@ -48,6 +49,7 @@
 import Vue from 'vue';
 import MusicPlayer from '@/components/MusicPlayer/MusicPlayer.vue'
 import CreatePlayList from '@/components/Playlist/CreatePlaylist/CreatePlaylist.vue';
+import NavBarElement from '@/components/shared/NavBarElement/NavBarElement.vue';
 
 export default Vue.extend({
     data () {
@@ -60,6 +62,7 @@ export default Vue.extend({
     components : {
         MusicPlayer,
         CreatePlayList,
+        NavBarElement
        
     },
 

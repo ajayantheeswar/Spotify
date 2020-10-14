@@ -1,18 +1,18 @@
 <template>
     <div class="flex items-center space-x-6 cursor-pointer album-details" @click="clicked">
         <div class="relative" style="width:55px;">
-            <img style="width:55px;" class="inline-block" :src="track.image_url" />
+            <img style="min-width:55px;" class="inline-block" :src="track.image_url" />
             <div v-if="isPlaying" style="width:55px;" class="absolute z-10 bottom-0 left-0 opacity-25">
                 <video autoplay loop muted inline src="@/assets/now_playing.mp4" />
             </div>
         </div>
-        <div class="song-artist text-xs space-y-1">
+        <div class="song-artist text-xs space-y-1" style="max-width:200px">
             <p class="text-sm truncate">{{ track.track_name }}</p>
             <div v-if="!isQueue" class="text-lightgrey1">
                 <p v-for="artist in track.track_artist" :key="artist.id">{{ artist.artist.artist_name }}</p>
             </div>
             <div v-else class="text-lightgrey1">
-                <p class="artist-names">{{ getArtistList + ' , ' + getArtistList + ' , ' +getArtistList }}</p>
+                <p class="artist-names">{{ getArtistList }}</p>
             </div>
         </div>
     </div>

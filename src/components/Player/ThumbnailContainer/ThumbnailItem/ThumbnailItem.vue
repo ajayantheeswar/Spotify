@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="p-2 space-y-2">
-            <h2 class="font-bold">{{  !isPlaylist ? thumItem.album_name : thumItem.name }}</h2>
+            <h2 class="font-bold truncate">{{  !isPlaylist ? thumItem.album_name : thumItem.name }}</h2>
             <h3 v-if="!isPlaylist" class="text-lightgrey1 fontSize capitalize">{{thumItem.artist.artist_name}}</h3>
         </div>
         <div

@@ -1,11 +1,10 @@
 <template>
 	<div class="flex flex-col pt-0">
-        <div class="bg-black sticky top-0 left-0 w-full p-3 pr-5 pl-5 text-xl font-bold z-10">Navbar</div>
         <div class="p-4">
             <thumb-nail-view-container 
                 v-for="language in languages" 
                 :key="language.id" 
-                :item="language" 
+                :language="language" 
                 :windowWidth="windowWidth" 
                 :isAlbum="true"
                 :title="`Popular ${language.language} Songs !`" />
